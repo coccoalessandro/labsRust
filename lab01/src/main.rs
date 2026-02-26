@@ -1,4 +1,5 @@
+mod cli;
+mod io;
 fn main() {
-    println!("Hello, world!2");
-    // prova
+    io::read_file("input.csv");
 }
