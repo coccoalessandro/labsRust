@@ -6,19 +6,8 @@ use std::env::args;
 fn main() {
 
     let args: Vec<String> = args().collect();
+    
+    let config = cli::parse_args(&args);
 
-    if args.len() < 2 {
-        eprintln!("Errore. Devi definire il nome del file da leggere.");
-        std::process::exit(1);
-    }
-
-    let head: usize;
-    if args.len() == 3 {
-        head = args[2].parse().unwrap();
-    } else {
-        head = 10;
-    }
-
-    let path = &args[1];
-    io::read_file(path, head);
+    io::read_file(&config.filename, config.head);
 }
