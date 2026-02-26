@@ -12,7 +12,13 @@ fn main() {
         std::process::exit(1);
     }
 
-    let path = &args[1];
+    let head: usize;
+    if args.len() == 3 {
+        head = args[2].parse().unwrap();
+    } else {
+        head = 10;
+    }
 
-    io::read_file(path);
+    let path = &args[1];
+    io::read_file(path, head);
 }
