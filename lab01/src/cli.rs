@@ -4,11 +4,10 @@ pub struct Config {
     pub head: usize,
 }
 
-pub fn parse_args(args: &[String]) -> Config {
+pub fn parse_args(args: &[String]) -> Result<Config, String> {
 
-    if args.len() < 2 {
-        eprintln!("Errore. Devi definire il nome del file da leggere.");
-        std::process::exit(1);
+    if args.len() < 2 || args.len() > 3 {
+        return Err("Errore nell'inserimento dell'input".to_string());
     }
 
     let filename = args[1].clone();
@@ -16,11 +15,14 @@ pub fn parse_args(args: &[String]) -> Config {
     let head: usize;
 
     if args.len() == 3 {
-        head = args[2].parse::<usize>().unwrap();
+        head = match args[2].parse::<usize>() {
+            Err(_) => return Err("Errore nell'inserimeto dell'input".to_string()),
+            Ok(head) => head,
+        };
     }
     else {
         head = 10;
     }
 
-    Config {filename, head}
+    Ok(Config {filename, head})
 }
